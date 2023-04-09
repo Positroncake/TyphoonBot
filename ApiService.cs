@@ -67,21 +67,17 @@ public class ApiService
 
     public async Task<List<KillmailId>> UpdateKills()
     {
-        Debug.WriteLine("IVAR/ " + _lastKmId);
         List<KillmailId> kmIds = await GetAllKills();
-        Debug.WriteLine("LLEN/ " + kmIds.Count);
         int index = kmIds.Count - 1;
         for (var i = 0; i < kmIds.Count; ++i)
         {
             var currentId = kmIds[i].killmail_id.ToString();
             if (currentId != _lastKmId) continue;
-            Debug.WriteLine($"STOP/ {_lastKmId} {i}");
             index = i;
             break;
         }
         List<KillmailId> newKmIds = kmIds.GetRange(0, index);
         UpdateLastKmId(kmIds[0].killmail_id.ToString());
-        Debug.WriteLine("NLEN/ " + newKmIds.Count);
         return newKmIds;
     }
     
@@ -170,7 +166,6 @@ public class ApiService
 
     private async void UpdateLastKmId(string kmId)
     {
-        Debug.WriteLine("KMID+ " + kmId);
         _lastKmId = kmId;
         await File.WriteAllTextAsync(KmListPath, kmId);
     }
