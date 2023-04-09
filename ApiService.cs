@@ -183,4 +183,23 @@ public class ApiService
         Stream stream = await response.Content.ReadAsStreamAsync();
         return await JsonSerializer.DeserializeAsync<List<KillmailId>>(stream) ?? new List<KillmailId>();
     }
+
+    public async Task RefreshRefreshToken()
+    {
+        var dict = new Dictionary<string, string>
+        {
+            { "grant_type", "refresh_token" },
+            { "refresh_token", _refreshToken },
+            { "client_id", _clientId },
+            { "scope", string.Join(' ', Scopes) }
+        };
+        var client = new HttpClient();
+        var data = new FormUrlEncodedContent(dict);
+        Task<HttpResponseMessage> response = client.PostAsync("https://login.eveonline.com/v2/oauth/token", data);
+        var token = JsonSerializer.Deserialize<Token>(await (await response).Content.ReadAsStringAsync());
+
+        _accessToken = token!.access_token;
+        _refreshToken = token.access_token;
+        await File.WriteAllTextAsync(TokenPath, _refreshToken);
+    }
 }

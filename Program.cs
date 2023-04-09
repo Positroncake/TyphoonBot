@@ -54,6 +54,7 @@ public class Program
         var phoonTimer = new Timer(PhoonTimer, are, 0, 60_000);
         var scramTimer = new Timer(ScramTimer, are, 3_600_000, 3_600_000);
         var zkillTimer = new Timer(ZkillTimer, are, 0, 30_000);
+        var tokenTimer = new Timer(TokenTimer, are, 7_200, 7_200);
         are.WaitOne();
         
         // Keep open
@@ -122,8 +123,8 @@ public class Program
             {
                 Title = title + system,
                 Description = $"https://zkillboard.com/kill/{km.killmail_id.ToString()}",
-                Color = colour
-                // ImageUrl = $"https://images.evetech.net/types/{km.victim.ship_type_id}/icon"
+                Color = colour,
+                ImageUrl = $"https://images.evetech.net/types/{km.victim.ship_type_id}/icon"
             };
             embed.AddField("Victim", $"[{victim}](https://zkillboard.com/character/{km.victim.character_id}) ([{victimCorp}](https://zkillboard.com/corporation/{km.victim.corporation_id})) in a {victimShip}");
             embed.AddField("Top damage", $"[{topDmg.Name}](https://zkillboard.com/character/{topDmg.NameId}) ([{topDmg.Corp}](https://zkillboard.com/corporation/{topDmg.CorpId})) in a {topDmg.Ship}");
@@ -131,6 +132,12 @@ public class Program
             embed.WithFooter(footer => footer.Text = $"on {time:yyyy MMM dd} at time {time:hh:mm:ss}");
             await c!.SendMessageAsync(embed: embed.Build());
         }
+    }
+
+    private async void TokenTimer(object? o)
+    {
+        var apiService = new ApiService();
+        await apiService.RefreshRefreshToken();
     }
 
     private Task Log(LogMessage lM)
