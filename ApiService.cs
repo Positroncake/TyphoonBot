@@ -199,7 +199,7 @@ public class ApiService
         var token = JsonSerializer.Deserialize<Token>(await (await response).Content.ReadAsStringAsync());
 
         _accessToken = token!.access_token;
-        _refreshToken = token.access_token;
+        _refreshToken = token.refresh_token;
         await File.WriteAllTextAsync(TokenPath, _refreshToken);
     }
 }
