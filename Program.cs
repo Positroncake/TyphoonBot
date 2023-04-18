@@ -53,7 +53,7 @@ public class Program
         var phoonTimer = new Timer(PhoonTimer, are, 0, 60_000);
         var scramTimer = new Timer(ScramTimer, are, 3_600_000, 3_600_000);
         var zkillTimer = new Timer(ZkillTimer, are, 0, 30_000);
-        var tokenTimer = new Timer(TokenTimer, are, 0, 7_200);
+        var tokenTimer = new Timer(TokenTimer, are, 0, 900_000);
         are.WaitOne();
         
         // Keep open
@@ -147,6 +147,7 @@ public class Program
     {
         var apiService = new ApiService();
         await apiService.RefreshRefreshToken();
+        Console.WriteLine($"ESI tokens refreshed at {DateTime.UtcNow:O}");
     }
 
     private Task Log(LogMessage lM)
