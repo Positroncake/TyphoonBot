@@ -68,7 +68,6 @@ public class ApiService
     public async Task<List<KillmailId>> UpdateKills()
     {
         List<KillmailId> kmIds = await GetAllKills();
-        Console.WriteLine($"Total kills: {kmIds.Count}");
         int index = kmIds.Count - 1;
         for (var i = 0; i < kmIds.Count; ++i)
         {
