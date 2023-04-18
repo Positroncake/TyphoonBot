@@ -70,20 +70,15 @@ public class ApiService
         List<KillmailId> kmIds = await GetAllKills();
         Console.WriteLine($"Total kills: {kmIds.Count}");
         int index = kmIds.Count - 1;
-        Console.WriteLine($"Index: {index}");
-        Console.WriteLine(kmIds.First().killmail_id);
-        Console.WriteLine(kmIds.Last().killmail_id);
         for (var i = 0; i < kmIds.Count; ++i)
         {
             var currentId = kmIds[i].killmail_id.ToString();
             if (currentId != _lastKmId) continue;
-            Console.WriteLine($"Stopping at index {i}");
             index = i;
             break;
         }
         List<KillmailId> newKmIds = kmIds.GetRange(0, index);
         UpdateLastKmId(kmIds[0].killmail_id.ToString());
-        Console.WriteLine($"newKmIds count: {newKmIds.Count}");
         return newKmIds;
     }
     
@@ -183,11 +178,9 @@ public class ApiService
         qs.Add("page", "1");
         qs.Add("token", _accessToken);
         var query = $"https://esi.evetech.net/latest/corporations/98729657/killmails/recent/?{qs}";
-        Console.WriteLine(query);
 
         var http = new HttpClient();
         HttpResponseMessage response = await http.GetAsync(query);
-        Console.WriteLine(await response.Content.ReadAsStringAsync());
         Stream stream = await response.Content.ReadAsStreamAsync();
         return await JsonSerializer.DeserializeAsync<List<KillmailId>>(stream) ?? new List<KillmailId>();
     }
