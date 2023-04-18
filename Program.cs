@@ -126,11 +126,18 @@ public class Program
                 Color = colour,
                 ImageUrl = $"https://images.evetech.net/types/{km.victim.ship_type_id}/icon"
             };
-            embed.AddField("Victim", $"[{victim}](https://zkillboard.com/character/{km.victim.character_id}) ([{victimCorp}](https://zkillboard.com/corporation/{km.victim.corporation_id})) in a {victimShip}");
-            embed.AddField("Top damage", string.IsNullOrEmpty(topDmg.Name) ? $"NPC in a {topDmg.Ship}" :
-                $"[{topDmg.Name}](https://zkillboard.com/character/{topDmg.NameId}) ([{topDmg.Corp}](https://zkillboard.com/corporation/{topDmg.CorpId})) in a {topDmg.Ship}");
-            embed.AddField("Final blow", string.IsNullOrEmpty(finalBlow.Name) ? $"NPC in a {finalBlow.Ship}" :
-                $"[{finalBlow.Name}](https://zkillboard.com/character/{finalBlow.NameId}) ([{finalBlow.Corp}](https://zkillboard.com/corporation/{finalBlow.CorpId})) in a {finalBlow.Ship}");
+            embed.AddField("Victim",
+                string.IsNullOrEmpty(victim) == false
+                    ? $"[{victim}](https://zkillboard.com/character/{km.victim.character_id}) ([{victimCorp}](https://zkillboard.com/corporation/{km.victim.corporation_id})) in a {victimShip}"
+                    : $"NPC in a {victimShip}");
+            embed.AddField("Top damage",
+                string.IsNullOrEmpty(topDmg.Name) == false
+                    ? $"[{topDmg.Name}](https://zkillboard.com/character/{topDmg.NameId}) ([{topDmg.Corp}](https://zkillboard.com/corporation/{topDmg.CorpId})) in a {topDmg.Ship}"
+                    : $"NPC in a {topDmg.Ship}");
+            embed.AddField("Final blow",
+                string.IsNullOrEmpty(finalBlow.Name) == false
+                    ? $"[{finalBlow.Name}](https://zkillboard.com/character/{finalBlow.NameId}) ([{finalBlow.Corp}](https://zkillboard.com/corporation/{finalBlow.CorpId})) in a {finalBlow.Ship}"
+                    : $"NPC in a {finalBlow.Ship}");
             embed.WithFooter(footer => footer.Text = $"on {time:yyyy MMM dd} at time {time:hh:mm:ss}");
             await c!.SendMessageAsync(embed: embed.Build());
         }
