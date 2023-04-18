@@ -11,7 +11,7 @@ public class Program
     private const ulong GeneralChannel = 902830255264366595;
     private const ulong ZkillChannel = 1088866098809679942;
 
-    private List<ulong> _excluded = new()
+    private readonly List<ulong> _excluded = new()
     {
         980383907939770388, // lobby
         1003756221632888892, // apply
@@ -21,14 +21,14 @@ public class Program
         1030437368785801256 // logs
     };
     private const string Prefix = "/bot/";
-    private List<string> _files = new()
+    private readonly List<string> _files = new()
     {
         "phoon.png",
         "fleetphoon.png",
         "fastphoon.png"
     };
     private List<(int, int)> _times = null!;
-    private ApiService _service = new();
+    private readonly ApiService _service = new();
 
     public static Task Main() => new Program().MainAsync();
 
@@ -127,8 +127,10 @@ public class Program
                 ImageUrl = $"https://images.evetech.net/types/{km.victim.ship_type_id}/icon"
             };
             embed.AddField("Victim", $"[{victim}](https://zkillboard.com/character/{km.victim.character_id}) ([{victimCorp}](https://zkillboard.com/corporation/{km.victim.corporation_id})) in a {victimShip}");
-            embed.AddField("Top damage", $"[{topDmg.Name}](https://zkillboard.com/character/{topDmg.NameId}) ([{topDmg.Corp}](https://zkillboard.com/corporation/{topDmg.CorpId})) in a {topDmg.Ship}");
-            embed.AddField("Final blow", $"[{finalBlow.Name}](https://zkillboard.com/character/{finalBlow.NameId}) ([{finalBlow.Corp}](https://zkillboard.com/corporation/{finalBlow.CorpId})) in a {finalBlow.Ship}");
+            embed.AddField("Top damage", string.IsNullOrEmpty(topDmg.Name) ? $"NPC in a {topDmg.Ship}" :
+                $"[{topDmg.Name}](https://zkillboard.com/character/{topDmg.NameId}) ([{topDmg.Corp}](https://zkillboard.com/corporation/{topDmg.CorpId})) in a {topDmg.Ship}");
+            embed.AddField("Final blow", string.IsNullOrEmpty(finalBlow.Name) ? $"NPC in a {finalBlow.Ship}" :
+                $"[{finalBlow.Name}](https://zkillboard.com/character/{finalBlow.NameId}) ([{finalBlow.Corp}](https://zkillboard.com/corporation/{finalBlow.CorpId})) in a {finalBlow.Ship}");
             embed.WithFooter(footer => footer.Text = $"on {time:yyyy MMM dd} at time {time:hh:mm:ss}");
             await c!.SendMessageAsync(embed: embed.Build());
         }
