@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using Discord;
 using Discord.WebSocket;
 using TyphoonBot.Models;
@@ -90,6 +89,7 @@ public class Program
     {
         var c = await _client.GetChannelAsync(ZkillChannel) as IMessageChannel;
         List<KillmailId> response = await _service.UpdateKills();
+        Console.WriteLine($"Got {response.Count} new kills");
         response.Reverse();
         List<Killmail> killmails = await _service.GetKillmails(response);
         foreach (Killmail km in killmails)
