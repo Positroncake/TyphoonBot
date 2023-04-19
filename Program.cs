@@ -89,6 +89,7 @@ public class Program
     {
         var c = await _client.GetChannelAsync(ZkillChannel) as IMessageChannel;
         List<KillmailId> response = await _service.UpdateKills();
+        if (response.Count == 0) return;
         Console.WriteLine($"Got {response.Count} new kills at {DateTime.UtcNow:O}");
         response.Reverse();
         List<Killmail> killmails = await _service.GetKillmails(response);
@@ -145,8 +146,7 @@ public class Program
 
     private async void TokenTimer(object? o)
     {
-        var apiService = new ApiService();
-        await apiService.RefreshRefreshToken();
+        await _service.Init();
         Console.WriteLine($"ESI tokens refreshed at {DateTime.UtcNow:O}");
     }
 
