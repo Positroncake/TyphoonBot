@@ -181,15 +181,18 @@ public class ApiService
         var http = new HttpClient();
         HttpResponseMessage response = await http.GetAsync(query);
         Stream stream = await response.Content.ReadAsStreamAsync();
+        List<KillmailId> debug;
         try
         {
-            return await JsonSerializer.DeserializeAsync<List<KillmailId>>(stream) ?? new List<KillmailId>();
+            debug = await JsonSerializer.DeserializeAsync<List<KillmailId>>(stream) ?? new List<KillmailId>();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
-            return new List<KillmailId>();
+            debug = new List<KillmailId>();
         }
+
+        return debug;
     }
 
     public async Task RefreshRefreshToken()
