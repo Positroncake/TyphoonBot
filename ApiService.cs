@@ -187,7 +187,7 @@ public class ApiService
         {
             debug = await JsonSerializer.DeserializeAsync<List<KillmailId>>(stream) ?? new List<KillmailId>();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine(await response.Content.ReadAsStringAsync());
             debug = new List<KillmailId>();

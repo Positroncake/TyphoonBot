@@ -53,7 +53,7 @@ public class Program
         var phoonTimer = new Timer(PhoonTimer, are, 0, 60_000);
         var scramTimer = new Timer(ScramTimer, are, 3_600_000, 3_600_000);
         var zkillTimer = new Timer(ZkillTimer, are, 0, 60_000);
-        var tokenTimer = new Timer(TokenTimer, are, 0, 900_000);
+        var tokenTimer = new Timer(TokenTimer, are, 0, 1_100_000);
         are.WaitOne();
         
         // Keep open
