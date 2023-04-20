@@ -122,7 +122,8 @@ public class Program
 
             var embed = new EmbedBuilder()
             {
-                Title = $"[{title + system}](https://zkillboard.com/kill/{km.killmail_id.ToString()})",
+                Title = title + system,
+                Description = $"https://zkillboard.com/kill/{km.killmail_id.ToString()}",
                 Color = colour,
                 ImageUrl = $"https://images.evetech.net/types/{km.victim.ship_type_id}/icon"
             };
