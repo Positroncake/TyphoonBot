@@ -89,8 +89,8 @@ public class Program
     {
         var c = await _client.GetChannelAsync(ZkillChannel) as IMessageChannel;
         List<KillmailId> response = await _service.UpdateKills();
-        if (response.Count == 0) return;
         Console.WriteLine($"Got {response.Count} new kills at {DateTime.UtcNow:O}");
+        if (response.Count == 0) return;
         response.Reverse();
         List<Killmail> killmails = await _service.GetKillmails(response);
         foreach (Killmail km in killmails)
