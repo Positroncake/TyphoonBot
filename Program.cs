@@ -79,7 +79,7 @@ public class Program
     {
         DateTime current = DateTime.UtcNow;
         if (current.Hour != 5) return;
-        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 16), R()), (R(17, 22), R()), (R(23, 4), R()) };
+        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 16), R()), (R(17, 20), R()), (R(23, 4), R()) };
         Console.WriteLine("-- Times scrambled --");
         foreach ((int h, int m) in _times)
             Console.WriteLine($"{h.ToString("00")}:{m.ToString("00")}");
