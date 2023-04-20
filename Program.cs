@@ -35,7 +35,7 @@ public class Program
     public async Task MainAsync()
     {
         // Generate times
-        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 15), R()), (R(22, 23), R()), (R(0, 4), R()) };
+        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 15), R()), (R(17, 22), R()), (R(0, 4), R()) };
         foreach ((int h, int m) in _times)
             Console.WriteLine($"{h:00}:{m:00}");
 
@@ -79,7 +79,7 @@ public class Program
     {
         DateTime current = DateTime.UtcNow;
         if (current.Hour != 5) return;
-        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 16), R()), (R(17, 20), R()), (R(23, 4), R()) };
+        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 16), R()), (R(17, 22), R()), (R(23, 4), R()) };
         Console.WriteLine("-- Times scrambled --");
         foreach ((int h, int m) in _times)
             Console.WriteLine($"{h.ToString("00")}:{m.ToString("00")}");
