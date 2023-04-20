@@ -167,7 +167,7 @@ public class Program
         var c = await _client.GetChannelAsync(message.Channel.Id) as IMessageChannel;
         IAsyncEnumerable<IReadOnlyCollection<IMessage>> x = c!.GetMessagesAsync(limit: 1, mode: CacheMode.AllowDownload, options: null);
         IMessage? lastMessage = (await x.FlattenAsync()).First();
-        if (lastMessage.ToString()!.Contains("phoon"))
+        if (lastMessage.ToString()!.ToLower().Contains("phoon"))
         {
             if (message.Channel.Name.Contains("intel") == false) await message.Channel.SendMessageAsync("typhoons! :D");
             await React();
