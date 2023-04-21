@@ -58,12 +58,13 @@ public class Program
         await Task.Delay(-1);
     }
 
-    public async Task InitSlashCommands()
+    private Task InitSlashCommands()
     {
         var cmd = new SlashCommandBuilder();
         cmd.WithName("typhoonctl");
         cmd.WithDescription("Controls various aspects of ./typhoon.sh");
         _client.SlashCommandExecuted += CommandReceived;
+        return Task.CompletedTask;
     }
 
     private async Task CommandReceived(SocketSlashCommand command)
