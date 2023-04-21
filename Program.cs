@@ -173,19 +173,18 @@ public class Program
         if (lastMessage.ToString()!.ToLower().Contains("phoon"))
         {
             await message.Channel.SendMessageAsync("typhoons! :D");
-            await React();
+            await React("typhoon");
         }
     
         // Check if message from positron
         if (message.Author.ToString().Contains("positroncake") &&
             message.Author.Discriminator.Contains("0001") &&
-            message.Channel.Name.Contains("intel") == false &&
-            RandomNumberGenerator.GetInt32(0, 12) == 0) await React();
+            RandomNumberGenerator.GetInt32(0, 12) == 0) await React("typhoon");
 
-        async Task React()
+        async Task React(string emojiName)
         {
             GuildEmote? emote = _client.Guilds.SelectMany(y => y.Emotes)
-                .FirstOrDefault(z => z.Name.IndexOf("typhoon", StringComparison.OrdinalIgnoreCase) != -1);
+                .FirstOrDefault(z => z.Name.IndexOf(emojiName, StringComparison.OrdinalIgnoreCase) != -1);
             if (emote is null) return;
             Console.WriteLine($"Reacted at {DateTime.UtcNow:O}");
             await message.AddReactionAsync(emote);
