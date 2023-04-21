@@ -43,8 +43,9 @@ public class Program
         await _client.LoginAsync(TokenType.Bot, (await File.ReadAllLinesAsync("/bot/token2"))[0]);
         await _client.StartAsync();
         await _client.SetStatusAsync(UserStatus.Online);
+        _client.Ready += InitSlashCommands;
         await _service.Init();
-        
+
         // Timers
         var are = new AutoResetEvent(false);
         var phoonTimer = new Timer(PhoonTimer, are, 0, 60_000);
@@ -55,6 +56,19 @@ public class Program
         
         // Keep open
         await Task.Delay(-1);
+    }
+
+    public async Task InitSlashCommands()
+    {
+        var cmd = new SlashCommandBuilder();
+        cmd.WithName("typhoonctl");
+        cmd.WithDescription("Controls various aspects of ./typhoon.sh");
+        _client.SlashCommandExecuted += CommandReceived;
+    }
+
+    private async Task CommandReceived(SocketSlashCommand command)
+    {
+        await command.RespondAsync("Test");
     }
 
     private async void PhoonTimer(object? o)
