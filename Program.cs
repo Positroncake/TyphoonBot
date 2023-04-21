@@ -13,13 +13,8 @@ public class Program
 
     private readonly List<ulong> _excluded = new()
     {
-        980383907939770388, // lobby
-        1003756221632888892, // apply
-        1045731395370238012, // llamas friends and spies
-        1075156391007887462, // defense
-        909202211546996766, // llama pings
-        1065738052133208196, // alpaca pings
-        1030437368785801256 // logs
+        910114456569278474, // c2 intel
+        1064213496704807052 // c4 intel
     };
     private const string Prefix = "/bot/";
     private readonly List<string> _files = new()
@@ -177,7 +172,7 @@ public class Program
         IMessage? lastMessage = (await x.FlattenAsync()).First();
         if (lastMessage.ToString()!.ToLower().Contains("phoon"))
         {
-            if (message.Channel.Name.Contains("intel") == false) await message.Channel.SendMessageAsync("typhoons! :D");
+            await message.Channel.SendMessageAsync("typhoons! :D");
             await React();
         }
     
