@@ -179,7 +179,7 @@ public class Program
         // Check if message from positron
         if (message.Author.ToString().Contains("positroncake") &&
             message.Author.Discriminator.Contains("0001") &&
-            RandomNumberGenerator.GetInt32(0, 12) == 0) await React("typhoon");
+            RandomNumberGenerator.GetInt32(0, 15) == 0) await React("typhoon");
 
         async Task React(string emojiName)
         {
