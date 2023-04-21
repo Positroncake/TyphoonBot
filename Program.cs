@@ -17,15 +17,16 @@ public class Program
         1003756221632888892, // apply
         1045731395370238012, // llamas friends and spies
         1075156391007887462, // defense
-        909202211546996766, // pings
+        909202211546996766, // llama pings
+        1065738052133208196, // alpaca pings
         1030437368785801256 // logs
     };
     private const string Prefix = "/bot/";
     private readonly List<string> _files = new()
     {
-        "phoon.png",
         "fleetphoon.png",
-        "fastphoon.png"
+        "fastphoon.png",
+        "phoon.png"
     };
     private List<(int, int)> _times = null!;
     private readonly ApiService _service = new();
@@ -50,7 +51,7 @@ public class Program
         
         // Timers
         var are = new AutoResetEvent(false);
-        var phoonTimer = new Timer(PhoonTimer, are, 0, 60_000);
+        var phoonTimer = new Timer(PhoonTimer, are, 0, 5_000);
         var scramTimer = new Timer(ScramTimer, are, 3_600_000, 3_600_000);
         var zkillTimer = new Timer(ZkillTimer, are, 0, 60_000);
         var tokenTimer = new Timer(TokenTimer, are, 0, 1_100_000);
@@ -69,9 +70,16 @@ public class Program
         async Task SendPhoonPic()
         {
             var c = await _client.GetChannelAsync(GeneralChannel) as IMessageChannel;
-            string rand = _files[RandomNumberGenerator.GetInt32(0, _files.Count)];
-            await c!.SendFileAsync($"{Prefix}{rand}");
-            Console.WriteLine($"Picture \"{rand}\" sent at {DateTime.UtcNow:O}");
+            int rand = RandomNumberGenerator.GetInt32(0, 100);
+            string path = rand switch
+            {
+                < 45 => _files[0],
+                < 75 => _files[1],
+                _ => _files[2]
+            };
+
+            await c!.SendFileAsync($"{Prefix}{path}");
+            Console.WriteLine($"Picture \"{path}\" sent at {DateTime.UtcNow:O}");
         }
     }
 
