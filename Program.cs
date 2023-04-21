@@ -45,7 +45,7 @@ public class Program
         _client.MessageReceived += MessageReceived;
         await _client.LoginAsync(TokenType.Bot, (await File.ReadAllLinesAsync("/bot/token2"))[0]);
         await _client.StartAsync();
-        await _client.SetStatusAsync(UserStatus.Invisible);
+        await _client.SetStatusAsync(UserStatus.Online);
         await _service.Init();
         
         // Timers
