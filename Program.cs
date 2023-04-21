@@ -69,14 +69,26 @@ public class Program
             .WithType(ApplicationCommandOptionType.SubCommandGroup)
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("send")
-                .WithDescription("Manually sends a specified image")
+                .WithDescription("Manually sends a specified image (name without .png extension)")
                 .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("name", ApplicationCommandOptionType.String, "The name of the image", true))
+                .AddOption("name", ApplicationCommandOptionType.String,
+                    "The name of the image (without .png extension)", true))
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("scram")
-                .WithDescription("Scrambles automatic phooning times, 0 for all or 1-4 for a specific interval (4 intervals total)")
+                .WithDescription(
+                    "Scrambles automatic phooning times, 0 for all or 1-4 for a specific interval (4 intervals total)")
                 .WithType(ApplicationCommandOptionType.SubCommand)
-                .AddOption("interval", ApplicationCommandOptionType.Integer, "The interval to scramble", true)));
+                .AddOption("interval", ApplicationCommandOptionType.Integer,
+                    "The interval to scramble (0 for all or 1-4 for a specific interval (4 intervals total))", true))
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("get-times")
+                .WithDescription("Shows scheduled automatic phooning times for today")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("whatever", ApplicationCommandOptionType.String,
+                    "Optional, put whatever in here, it has no effect", false))
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("add-time")
+                .WithDescription("Schedules a phoon to be sent today at a specific time")));
         await _client.CreateGlobalApplicationCommandAsync(globalCommand.Build());
         _client.SlashCommandExecuted += CommandReceived;
     }
