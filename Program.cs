@@ -17,11 +17,12 @@ public class Program
         1064213496704807052 // c4 intel
     };
     private const string Prefix = "/bot/";
-    private readonly List<string> _files = new()
+    private readonly List<(int, string)> _images = new()
     {
-        "fleetphoon.png",
-        "fastphoon.png",
-        "phoon.png"
+        (35, "fleetphoon.png"),
+        (70, "fastphoon.png"),
+        (97, "phoon.png"),
+        (100, "tormentor.png")
     };
     private List<(int, int)> _times = null!;
     private readonly ApiService _service = new();
@@ -65,13 +66,15 @@ public class Program
         async Task SendPhoonPic()
         {
             var c = await _client.GetChannelAsync(GeneralChannel) as IMessageChannel;
-            int rand = RandomNumberGenerator.GetInt32(0, 100);
-            string path = rand switch
+            int random = RandomNumberGenerator.GetInt32(0, 100);
+            var path = "";
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach ((int, string) image in _images)
             {
-                < 45 => _files[0],
-                < 75 => _files[1],
-                _ => _files[2]
-            };
+                if (random >= image.Item1) continue;
+                path = image.Item2;
+                break;
+            }
 
             await c!.SendFileAsync($"{Prefix}{path}");
             Console.WriteLine($"Picture \"{path}\" sent at {DateTime.UtcNow:O}");
