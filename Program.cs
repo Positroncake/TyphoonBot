@@ -63,6 +63,20 @@ public class Program
         var globalCommand = new SlashCommandBuilder();
         globalCommand.WithName("typhoonctl");
         globalCommand.WithDescription("Controls various aspects of ./typhoon.sh");
+        globalCommand.AddOption(new SlashCommandOptionBuilder()
+            .WithName("image")
+            .WithDescription("Controls manual and automatic phooning")
+            .WithType(ApplicationCommandOptionType.SubCommandGroup)
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("send")
+                .WithDescription("Manually sends a specified image")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("name", ApplicationCommandOptionType.String, "The name of the image", true))
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("scram")
+                .WithDescription("Scrambles automatic phooning times, 0 for all or 1-4 for a specific interval (4 intervals total)")
+                .WithType(ApplicationCommandOptionType.SubCommand)
+                .AddOption("interval", ApplicationCommandOptionType.Integer, "The interval to scramble", true)));
         await _client.CreateGlobalApplicationCommandAsync(globalCommand.Build());
         _client.SlashCommandExecuted += CommandReceived;
     }
