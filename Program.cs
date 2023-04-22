@@ -26,6 +26,13 @@ public class Program
     };
     private List<(int, int)> _times = null!;
     private readonly ApiService _service = new();
+    
+    private void GenTimes()
+    {
+        int rawInterval = R(22, 27);
+        int interval = rawInterval > 23 ? rawInterval - 24 : rawInterval;
+        _times = new List<(int, int)> { (R(13, 17), R()), (interval , R()) };
+    }
 
     public static Task Main() => new Program().MainAsync();
 
@@ -237,9 +244,4 @@ public class Program
 
     private static int R() => RandomNumberGenerator.GetInt32(0, 60);
     private static int R(int min, int max) => RandomNumberGenerator.GetInt32(min, max + 1);
-
-    private void GenTimes()
-    {
-        _times = new List<(int, int)> { (R(12, 13), R()), (R(14, 16), R()), (R(17, 22), R()), (R(4, 23), R()) };
-    }
 }
